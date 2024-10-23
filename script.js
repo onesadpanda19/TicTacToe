@@ -5,10 +5,13 @@
 
 function createGame() {
   const gameBoard = new Array(9).fill(null);
-  return gameBoard;
+  let gameState = 'playing | draw | win'
+  return gameBoard, gameState;
 }
 
-function playGame(choice) {
+function playGame() {
+  let newGameBoard = createGame();
+
   let playerName1 = prompt('choose a name');
   let piece1 = prompt('choose x or o');
 
@@ -22,11 +25,74 @@ function playGame(choice) {
   console.log(playerTwo);
 
   let userInput = prompt('Choose a number between 0 and 8');
+  let updatedGameBoard = updateGameBoard(newGameBoard, userInput);
 
-  console.log(userInput);
+  /*while game != won {
+    run game
+
+    Playone choice
+    Play2 choice
+
+    decide round winner
+
+
+    how do i make this work?
+
+    return winner
+    
+    while loop, do while loop, do loop while array has a null value?
+  }
+*/
+  
+function checkForWin() {
+  const win = "no";
+  if (
+  (gameBoard.gameBoard[0] === currentPlayer.token &&
+    gameBoard.gameBoard[1] === currentPlayer.token &&
+    gameBoard.gameBoard[2] === currentPlayer.token) ||
+  (gameBoard.gameBoard[3] === currentPlayer.token &&
+    gameBoard.gameBoard[4] === currentPlayer.token &&
+    gameBoard.gameBoard[5] === currentPlayer.token) ||
+  (gameBoard.gameBoard[6] === currentPlayer.token &&
+    gameBoard.gameBoard[7] === currentPlayer.token &&
+    gameBoard.gameBoard[8] === currentPlayer.token)
+    )
+    return win = "win"
+  else if (
+    (gameBoard.gameBoard[0] === currentPlayer.token &&
+      gameBoard.gameBoard[3] === currentPlayer.token &&
+      gameBoard.gameBoard[6] === currentPlayer.token) ||
+    (gameBoard.gameBoard[1] === currentPlayer.token &&
+      gameBoard.gameBoard[4] === currentPlayer.token &&
+      gameBoard.gameBoard[7] === currentPlayer.token) ||
+    (gameBoard.gameBoard[2] === currentPlayer.token &&
+      gameBoard.gameBoard[5] === currentPlayer.token &&
+      gameBoard.gameBoard[8] === currentPlayer.token)
+    )
+    return win = 'win'
+  else if (
+    (gameBoard.gameBoard[0] === currentPlayer.token &&
+      gameBoard.gameBoard[4] === currentPlayer.token &&
+      gameBoard.gameBoard[8] === currentPlayer.token) ||
+    (gameBoard.gameBoard[2] === currentPlayer.token &&
+      gameBoard.gameBoard[4] === currentPlayer.token &&
+      gameBoard.gameBoard[6] === currentPlayer.token)
+    s)
+   
 }
 
-playGame();
+
+
+}
+
+/**
+* Update should take the userInput and change the gameBoard with piece... how to get piece?
+*/
+function updateGameBoard(gameBoard, userInput, piece) {
+
+  console.log(gameBoard);
+  console.log(userInput);
+}
 
 function createPlayer(playerName, piece) {
   if (piece == 'x') {
@@ -41,3 +107,5 @@ function createPlayer(playerName, piece) {
 
   return { playerName, timesWon: 0, piece };
 }
+
+playGame();
