@@ -5,8 +5,8 @@
 
 function createGame() {
   const gameBoard = new Array(9).fill(null);
-  let gameState = 'playing | draw | win'
-  return gameBoard, gameState;
+  let gameState = 'playing';
+  return { gameBoard, gameState };
 }
 
 function playGame() {
@@ -25,11 +25,27 @@ function playGame() {
   console.log(playerTwo);
 
   let userInput = prompt('Choose a number between 0 and 8');
-  let updatedGameBoard = updateGameBoard(newGameBoard, userInput);
+  let updatedGameBoard = updateGameBoard(
+    newGameBoard,
+    userInput,
+    playerOne,
+    playerTwo
+  );
 
-  /*while game != won {
+  console.log(updatedGameBoard);
+}
+
+function updateGameBoard(gameBoard, userInput, playerOne, playerTwo, piece) {
+  console.log(gameBoard);
+  console.log(userInput);
+  console.log(piece);
+  ifWon(gameBoard.gameState, playerOne);
+
+  return gameBoard;
+}
+/*while game != won {
     run game
-
+    
     Playone choice
     Play2 choice
 
@@ -43,22 +59,22 @@ function playGame() {
     while loop, do while loop, do loop while array has a null value?
   }
 */
-  
+
 function checkForWin() {
-  const win = "no";
+  const win = 'no';
   if (
-  (gameBoard.gameBoard[0] === currentPlayer.token &&
-    gameBoard.gameBoard[1] === currentPlayer.token &&
-    gameBoard.gameBoard[2] === currentPlayer.token) ||
-  (gameBoard.gameBoard[3] === currentPlayer.token &&
-    gameBoard.gameBoard[4] === currentPlayer.token &&
-    gameBoard.gameBoard[5] === currentPlayer.token) ||
-  (gameBoard.gameBoard[6] === currentPlayer.token &&
-    gameBoard.gameBoard[7] === currentPlayer.token &&
-    gameBoard.gameBoard[8] === currentPlayer.token)
-    )
-    return win = "win"
-  else if (
+    (gameBoard.gameBoard[0] === currentPlayer.token &&
+      gameBoard.gameBoard[1] === currentPlayer.token &&
+      gameBoard.gameBoard[2] === currentPlayer.token) ||
+    (gameBoard.gameBoard[3] === currentPlayer.token &&
+      gameBoard.gameBoard[4] === currentPlayer.token &&
+      gameBoard.gameBoard[5] === currentPlayer.token) ||
+    (gameBoard.gameBoard[6] === currentPlayer.token &&
+      gameBoard.gameBoard[7] === currentPlayer.token &&
+      gameBoard.gameBoard[8] === currentPlayer.token)
+  ) {
+    return (win = 'win');
+  } else if (
     (gameBoard.gameBoard[0] === currentPlayer.token &&
       gameBoard.gameBoard[3] === currentPlayer.token &&
       gameBoard.gameBoard[6] === currentPlayer.token) ||
@@ -68,31 +84,40 @@ function checkForWin() {
     (gameBoard.gameBoard[2] === currentPlayer.token &&
       gameBoard.gameBoard[5] === currentPlayer.token &&
       gameBoard.gameBoard[8] === currentPlayer.token)
-    )
-    return win = 'win'
-  else if (
+  ) {
+    return (win = 'win');
+  } else if (
     (gameBoard.gameBoard[0] === currentPlayer.token &&
       gameBoard.gameBoard[4] === currentPlayer.token &&
       gameBoard.gameBoard[8] === currentPlayer.token) ||
     (gameBoard.gameBoard[2] === currentPlayer.token &&
       gameBoard.gameBoard[4] === currentPlayer.token &&
       gameBoard.gameBoard[6] === currentPlayer.token)
-    s)
-   
+  ) {
+    return (win = 'win');
+  }
 }
 
+function ifWon(gameState, currentPlayer) {
+  checkForWin();
+  if (gameState === 'win') {
+    currentPlayer.score += 1;
+  }
 
-
+  console.log(`${currentPlayer.name} wins!`);
+  return (gameBoard = createGame());
 }
 
+function ifPlaying() {
+  if ((gameState = playing)) {
+    playGame();
+    updateGameBoard();
+    userInput();
+  }
+}
 /**
-* Update should take the userInput and change the gameBoard with piece... how to get piece?
-*/
-function updateGameBoard(gameBoard, userInput, piece) {
-
-  console.log(gameBoard);
-  console.log(userInput);
-}
+ * Update should take the userInput and change the gameBoard with piece... how to get piece?
+ */
 
 function createPlayer(playerName, piece) {
   if (piece == 'x') {
