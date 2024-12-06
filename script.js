@@ -11,6 +11,7 @@ function createGame() {
 
 function playGame() {
   let newGameBoard = createGame();
+  // {gameBoard: [], gameState: 'playing'}
 
   let playerName1 = prompt('choose a name');
   let piece1 = prompt('choose x or o');
@@ -21,25 +22,40 @@ function playGame() {
   let playerOne = createPlayer(playerName1, piece1);
   let playerTwo = createPlayer(playerName2, piece2);
 
+  // {piece: 'x', playerName: 'JoeMama', timesWon: 0}
+
   console.log(playerOne);
   console.log(playerTwo);
 
+  // This is one turn (we need a game loop)
+  // Get current player turn choice
   let userInput = prompt('Choose a number between 0 and 8');
-  let updatedGameBoard = updateGameBoard(
-    newGameBoard,
-    userInput,
-    playerOne,
-    playerTwo
-  );
+  // Update game board with piece
+  let updatedGameBoard = updateGameBoard(newGameBoard, userInput, playerOne);
+  // Check for win
+
+  // Repeat
 
   console.log(updatedGameBoard);
 }
 
-function updateGameBoard(gameBoard, userInput, playerOne, playerTwo, piece) {
+/**
+ * Takes a player piece, and updates the gameBoard array
+ * @param {Object} gameBoard - The current game board state object
+ * @property {Array} gameBoard.gameBoard - Current gameboard array
+ * @property {String} gameBoard.gameState - Current gameboard state (playing, finished)
+ */
+function updateGameBoard(gameBoard, userInput, currentPlayer) {
+  // Find a place in array and change it to another value
+  // make validation for the update gameBoard and if player chooses a wrong piece, create game loop
   console.log(gameBoard);
+  gameBoard.gameBoard[userInput] = currentPlayer.piece;
+  console.log(gameBoard);
+
   console.log(userInput);
-  console.log(piece);
-  ifWon(gameBoard.gameState, playerOne);
+  console.log(currentPlayer);
+
+  // ifWon(gameBoard.gameState, playerOne, playerTwo);
 
   return gameBoard;
 }
