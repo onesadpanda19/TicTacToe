@@ -11,7 +11,7 @@ function createGame() {
 
 function playGame() {
   let newGameBoard = createGame();
-  // {gameBoard: [], gameState: 'playing'}
+  // {gameBoard: [null,...null], gameState: 'playing'}
 
   let playerName1 = prompt('choose a name');
   let piece1 = prompt('choose x or o');
@@ -26,6 +26,12 @@ function playGame() {
 
   console.log(playerOne);
   console.log(playerTwo);
+
+  // Old gameboard = [null, null, null, 'x', null, null, null]
+  // new gameBoard = [null, null, 'o', 'x', null ,null, null]
+
+  // let oldToken = currentPlayer.piece;
+  // let newPlayer = if(playerOne.piece == oldToken) { newPlayer = playerTwo} else {newPlayer = playerOne}
 
   // This is one turn (we need a game loop)
   // Get current player turn choice
@@ -48,6 +54,7 @@ function playGame() {
 function updateGameBoard(gameBoard, userInput, currentPlayer) {
   // Find a place in array and change it to another value
   // make validation for the update gameBoard and if player chooses a wrong piece, create game loop
+
   console.log(gameBoard);
   gameBoard.gameBoard[userInput] = currentPlayer.piece;
   console.log(gameBoard);
