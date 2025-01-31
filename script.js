@@ -35,9 +35,22 @@ function playGame() {
 
   // This is one turn (we need a game loop)
   // Get current player turn choice
+  let currentPlayer = playerOne;
   let userInput = prompt('Choose a number between 0 and 8');
   // Update game board with piece
-  let updatedGameBoard = updateGameBoard(newGameBoard, userInput, playerOne);
+  let updatedGameBoard = updateGameBoard(
+    newGameBoard,
+    userInput,
+    currentPlayer
+  );
+  let oldToken = currentPlayer.piece;
+  if (playerOne.piece == oldToken) {
+    playerTwo = currentPlayer;
+  } else {
+    currentPlayer = playerOne;
+  }
+
+  ifPlaying();
   // Check for win
 
   // Repeat
@@ -66,25 +79,13 @@ function updateGameBoard(gameBoard, userInput, currentPlayer) {
 
   return gameBoard;
 }
-/*while game != won {
-    run game
-    
-    Playone choice
-    Play2 choice
 
-    decide round winner
+function nextChoice() {
+  userInput;
+}
 
-
-    how do i make this work?
-
-    return winner
-    
-    while loop, do while loop, do loop while array has a null value?
-  }
-*/
-
-function checkForWin() {
-  const win = 'no';
+function checkForWin(gameBoard) {
+  const gameState = 'playing';
   if (
     (gameBoard.gameBoard[0] === currentPlayer.token &&
       gameBoard.gameBoard[1] === currentPlayer.token &&
@@ -96,7 +97,7 @@ function checkForWin() {
       gameBoard.gameBoard[7] === currentPlayer.token &&
       gameBoard.gameBoard[8] === currentPlayer.token)
   ) {
-    return (win = 'win');
+    return (gameState = 'win');
   } else if (
     (gameBoard.gameBoard[0] === currentPlayer.token &&
       gameBoard.gameBoard[3] === currentPlayer.token &&
@@ -108,7 +109,7 @@ function checkForWin() {
       gameBoard.gameBoard[5] === currentPlayer.token &&
       gameBoard.gameBoard[8] === currentPlayer.token)
   ) {
-    return (win = 'win');
+    return (gameState = 'win');
   } else if (
     (gameBoard.gameBoard[0] === currentPlayer.token &&
       gameBoard.gameBoard[4] === currentPlayer.token &&
@@ -117,7 +118,20 @@ function checkForWin() {
       gameBoard.gameBoard[4] === currentPlayer.token &&
       gameBoard.gameBoard[6] === currentPlayer.token)
   ) {
-    return (win = 'win');
+    return (gamestae = 'win');
+  }
+}
+function ifPlaying() {
+  if ((gameState = 'playing')) {
+    nextChoice();
+    checkForWin();
+    updateGameBoard();
+    checkForWin(gameBoard);
+    if ((gameState = 'win')) {
+      ifWon();
+    } else {
+      ifPlaying();
+    }
   }
 }
 
@@ -131,13 +145,6 @@ function ifWon(gameState, currentPlayer) {
   return (gameBoard = createGame());
 }
 
-function ifPlaying() {
-  if ((gameState = playing)) {
-    playGame();
-    updateGameBoard();
-    userInput();
-  }
-}
 /**
  * Update should take the userInput and change the gameBoard with piece... how to get piece?
  */
