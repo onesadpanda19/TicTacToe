@@ -35,27 +35,13 @@ function playGame() {
 
   // This is one turn (we need a game loop)
   // Get current player turn choice
-  let currentPlayer = playerOne;
-  let userInput = prompt('Choose a number between 0 and 8');
-  // Update game board with piece
-  let updatedGameBoard = updateGameBoard(
-    newGameBoard,
-    userInput,
-    currentPlayer
-  );
-  let oldToken = currentPlayer.piece;
-  if (playerOne.piece == oldToken) {
-    playerTwo = currentPlayer;
-  } else {
-    currentPlayer = playerOne;
-  }
 
-  ifPlaying();
+  let currentPlayer = playerOne;
+
+  ifPlaying(newGameBoard, currentPlayer);
   // Check for win
 
   // Repeat
-
-  console.log(updatedGameBoard);
 }
 
 /**
@@ -65,23 +51,28 @@ function playGame() {
  * @property {String} gameBoard.gameState - Current gameboard state (playing, finished)
  */
 function updateGameBoard(gameBoard, userInput, currentPlayer) {
+  // replace this into nextChoice@!!!!!!
   // Find a place in array and change it to another value
   // make validation for the update gameBoard and if player chooses a wrong piece, create game loop
+}
 
-  console.log(gameBoard);
-  gameBoard.gameBoard[userInput] = currentPlayer.piece;
-  console.log(gameBoard);
-
-  console.log(userInput);
-  console.log(currentPlayer);
+function nextChoice(gameBoard, currentPlayer) {
+  let userInput = prompt('Choose a number between 0 and 8');
+  // Update game board with piece
 
   // ifWon(gameBoard.gameState, playerOne, playerTwo);
 
-  return gameBoard;
-}
+  if (choice == null) {
+    console.log(gameBoard);
+    gameBoard.gameBoard[userInput] = currentPlayer.piece; /// start work here! bugs for days!
+    console.log(gameBoard);
 
-function nextChoice() {
-  userInput;
+    console.log(userInput);
+    console.log(currentPlayer);
+  } else if (choice !== null) {
+    alert('make a new choice');
+    nextChoice();
+  }
 }
 
 function checkForWin(gameBoard) {
@@ -118,16 +109,21 @@ function checkForWin(gameBoard) {
       gameBoard.gameBoard[4] === currentPlayer.token &&
       gameBoard.gameBoard[6] === currentPlayer.token)
   ) {
-    return (gamestae = 'win');
+    return (gameState = 'win');
   }
 }
-function ifPlaying() {
-  if ((gameState = 'playing')) {
+function ifPlaying(gameBoard, currentPlayer) {
+  if (gameBoard.gameState === 'playing') {
     nextChoice();
-    checkForWin();
-    updateGameBoard();
+    let oldToken = currentPlayer.piece;
+    if (playerOne.piece == oldToken) {
+      playerTwo = currentPlayer;
+    } else {
+      currentPlayer = playerOne;
+    }
+
     checkForWin(gameBoard);
-    if ((gameState = 'win')) {
+    if (gameState == 'win') {
       ifWon();
     } else {
       ifPlaying();
