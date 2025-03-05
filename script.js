@@ -19,8 +19,8 @@ function playGame() {
   let playerName2 = prompt('choose a name');
   let piece2 = prompt('choose x or o');
 
-  let playerOne = createPlayer(playerName1, piece1);
-  let playerTwo = createPlayer(playerName2, piece2);
+  let playerOne = createPlayer(playerName1, piece);
+  let playerTwo = createPlayer(playerName2, piece);
 
   // {piece: 'x', playerName: 'JoeMama', timesWon: 0}
 
@@ -38,10 +38,19 @@ function playGame() {
 
   let currentPlayer = playerOne;
 
-  ifPlaying(newGameBoard, currentPlayer);
+  ifPlaying(playerOne, playerTwo, newGameBoard, currentPlayer);
   // Check for win
 
   // Repeat
+}
+
+function updateGameBoard(userInput, newGameBoard, currentPlayer) {
+  if (newGameBoard.gameBoard.Array == null) {
+    newGameBoard.gameBoard[userInput] = currentPlayer.piece;
+  } else if (newGameBoard.gameBoard.Array !== null) {
+    alert('make a new choice');
+    nextChoice();
+  }
 }
 
 /**
@@ -50,35 +59,29 @@ function playGame() {
  * @property {Array} gameBoard.gameBoard - Current gameboard array
  * @property {String} gameBoard.gameState - Current gameboard state (playing, finished)
  */
-function updateGameBoard(gameBoard, userInput, currentPlayer) {
-  // replace this into nextChoice@!!!!!!
-  // Find a place in array and change it to another value
-  // make validation for the update gameBoard and if player chooses a wrong piece, create game loop
-}
-
-function nextChoice(gameBoard, currentPlayer) {
+function nextChoice(newGameBoard, currentPlayer) {
+  // prompt user for choice
   let userInput = prompt('Choose a number between 0 and 8');
-  // Update game board with piece
 
-  // ifWon(gameBoard.gameState, playerOne, playerTwo);
+  if (userInput !== null) {
+    // if user input is defined
 
-  if (choice == null) {
-    console.log(gameBoard);
-    gameBoard.gameBoard[userInput] = currentPlayer.piece; /// start work here! bugs for days!
-    console.log(gameBoard);
-
-    console.log(userInput);
-    console.log(currentPlayer);
-  } else if (choice !== null) {
+    // 1 - Use updateGameBoard
+    // 2 - Look at userInput place on gameboard array
+    // 3 - If empty / null, fill it with player choice
+    // 4 - Else, if it is not null, restart the choice prompt (nextChoice)
+    updateGameBoard(userInput, newGameBoard, currentPlayer);
+  } else if (userInput == null) {
+    // if not defined, restart, prompt again
     alert('make a new choice');
     nextChoice();
   }
 }
 
-function checkForWin(gameBoard) {
+function checkForWin(gameBoard, currentPlayer) {
   const gameState = 'playing';
   if (
-    (gameBoard.gameBoard[0] === currentPlayer.token &&
+    (gameBoard.gameBoard[0] === currentPlayer.piece &&
       gameBoard.gameBoard[1] === currentPlayer.token &&
       gameBoard.gameBoard[2] === currentPlayer.token) ||
     (gameBoard.gameBoard[3] === currentPlayer.token &&
@@ -112,9 +115,13 @@ function checkForWin(gameBoard) {
     return (gameState = 'win');
   }
 }
-function ifPlaying(gameBoard, currentPlayer) {
-  if (gameBoard.gameState === 'playing') {
-    nextChoice();
+function ifPlaying(playerOne, playerTwo, newGameBoard, currentPlayer) {
+  console.log(newGameBoard);
+  console.log(currentPlayer);
+
+  if (newGameBoard.gameState === 'playing') {
+    nextChoice(newGameBoard, currentPlayer);
+
     let oldToken = currentPlayer.piece;
     if (playerOne.piece == oldToken) {
       playerTwo = currentPlayer;
@@ -122,7 +129,7 @@ function ifPlaying(gameBoard, currentPlayer) {
       currentPlayer = playerOne;
     }
 
-    checkForWin(gameBoard);
+    checkForWin(newGameBoard);
     if (gameState == 'win') {
       ifWon();
     } else {
