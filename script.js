@@ -19,9 +19,8 @@ function playGame() {
   let playerName2 = prompt('choose a name');
   let piece2 = prompt('choose x or o');
 
-  let playerOne = createPlayer(playerName1, piece);
-  let playerTwo = createPlayer(playerName2, piece);
-
+  let playerOne = createPlayer(playerName1, piece1);
+  let playerTwo = createPlayer(playerName2, piece2);
   // {piece: 'x', playerName: 'JoeMama', timesWon: 0}
 
   console.log(playerOne);
@@ -30,8 +29,8 @@ function playGame() {
   // Old gameboard = [null, null, null, 'x', null, null, null]
   // new gameBoard = [null, null, 'o', 'x', null ,null, null]
 
-  // let oldToken = currentPlayer.piece;
-  // let newPlayer = if(playerOne.piece == oldToken) { newPlayer = playerTwo} else {newPlayer = playerOne}
+  // let oldpiece = currentPlayer.piece;
+  // let newPlayer = if(playerOne.piece == oldpiece) { newPlayer = playerTwo} else {newPlayer = playerOne}
 
   // This is one turn (we need a game loop)
   // Get current player turn choice
@@ -82,39 +81,40 @@ function checkForWin(gameBoard, currentPlayer) {
   const gameState = 'playing';
   if (
     (gameBoard.gameBoard[0] === currentPlayer.piece &&
-      gameBoard.gameBoard[1] === currentPlayer.token &&
-      gameBoard.gameBoard[2] === currentPlayer.token) ||
-    (gameBoard.gameBoard[3] === currentPlayer.token &&
-      gameBoard.gameBoard[4] === currentPlayer.token &&
-      gameBoard.gameBoard[5] === currentPlayer.token) ||
-    (gameBoard.gameBoard[6] === currentPlayer.token &&
-      gameBoard.gameBoard[7] === currentPlayer.token &&
-      gameBoard.gameBoard[8] === currentPlayer.token)
+      gameBoard.gameBoard[1] === currentPlayer.piece &&
+      gameBoard.gameBoard[2] === currentPlayer.piece) ||
+    (gameBoard.gameBoard[3] === currentPlayer.piece &&
+      gameBoard.gameBoard[4] === currentPlayer.piece &&
+      gameBoard.gameBoard[5] === currentPlayer.piece) ||
+    (gameBoard.gameBoard[6] === currentPlayer.piece &&
+      gameBoard.gameBoard[7] === currentPlayer.piece &&
+      gameBoard.gameBoard[8] === currentPlayer.piece)
   ) {
     return (gameState = 'win');
   } else if (
-    (gameBoard.gameBoard[0] === currentPlayer.token &&
-      gameBoard.gameBoard[3] === currentPlayer.token &&
-      gameBoard.gameBoard[6] === currentPlayer.token) ||
-    (gameBoard.gameBoard[1] === currentPlayer.token &&
-      gameBoard.gameBoard[4] === currentPlayer.token &&
-      gameBoard.gameBoard[7] === currentPlayer.token) ||
-    (gameBoard.gameBoard[2] === currentPlayer.token &&
-      gameBoard.gameBoard[5] === currentPlayer.token &&
-      gameBoard.gameBoard[8] === currentPlayer.token)
+    (gameBoard.gameBoard[0] === currentPlayer.piece &&
+      gameBoard.gameBoard[3] === currentPlayer.piece &&
+      gameBoard.gameBoard[6] === currentPlayer.piece) ||
+    (gameBoard.gameBoard[1] === currentPlayer.piece &&
+      gameBoard.gameBoard[4] === currentPlayer.piece &&
+      gameBoard.gameBoard[7] === currentPlayer.piece) ||
+    (gameBoard.gameBoard[2] === currentPlayer.piece &&
+      gameBoard.gameBoard[5] === currentPlayer.piece &&
+      gameBoard.gameBoard[8] === currentPlayer.piece)
   ) {
     return (gameState = 'win');
   } else if (
-    (gameBoard.gameBoard[0] === currentPlayer.token &&
-      gameBoard.gameBoard[4] === currentPlayer.token &&
-      gameBoard.gameBoard[8] === currentPlayer.token) ||
-    (gameBoard.gameBoard[2] === currentPlayer.token &&
-      gameBoard.gameBoard[4] === currentPlayer.token &&
-      gameBoard.gameBoard[6] === currentPlayer.token)
+    (gameBoard.gameBoard[0] === currentPlayer.piece &&
+      gameBoard.gameBoard[4] === currentPlayer.piece &&
+      gameBoard.gameBoard[8] === currentPlayer.piece) ||
+    (gameBoard.gameBoard[2] === currentPlayer.piece &&
+      gameBoard.gameBoard[4] === currentPlayer.piece &&
+      gameBoard.gameBoard[6] === currentPlayer.piece)
   ) {
     return (gameState = 'win');
   }
 }
+
 function ifPlaying(playerOne, playerTwo, newGameBoard, currentPlayer) {
   console.log(newGameBoard);
   console.log(currentPlayer);
@@ -122,8 +122,8 @@ function ifPlaying(playerOne, playerTwo, newGameBoard, currentPlayer) {
   if (newGameBoard.gameState === 'playing') {
     nextChoice(newGameBoard, currentPlayer);
 
-    let oldToken = currentPlayer.piece;
-    if (playerOne.piece == oldToken) {
+    let oldPiece = currentPlayer.piece;
+    if (playerOne.piece == oldPiece) {
       playerTwo = currentPlayer;
     } else {
       currentPlayer = playerOne;
@@ -151,12 +151,18 @@ function ifWon(gameState, currentPlayer) {
 /**
  * Update should take the userInput and change the gameBoard with piece... how to get piece?
  */
-
+// validate players!!!!!!!!
 function createPlayer(playerName, piece) {
   if (piece == 'x') {
     piece = 'x';
   } else {
     piece = 'o';
+  }
+
+  if (piece == 'o') {
+    piece = 'o';
+  } else {
+    piece = 'x';
   }
 
   if (piece !== 'x' && piece !== 'o') {
