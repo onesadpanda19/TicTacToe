@@ -23,9 +23,6 @@ function playGame() {
   let playerTwo = createPlayer(playerName2, piece2);
   // {piece: 'x', playerName: 'JoeMama', timesWon: 0}
 
-  console.log(playerOne);
-  console.log(playerTwo);
-
   // Old gameboard = [null, null, null, 'x', null, null, null]
   // new gameBoard = [null, null, 'o', 'x', null ,null, null]
 
@@ -44,9 +41,20 @@ function playGame() {
 }
 
 function updateGameBoard(userInput, newGameBoard, currentPlayer) {
-  if (newGameBoard.gameBoard.Array == null) {
+  if (newGameBoard.gameBoard[userInput] == null) {
     newGameBoard.gameBoard[userInput] = currentPlayer.piece;
-  } else if (newGameBoard.gameBoard.Array !== null) {
+    console.log(`
+${newGameBoard.gameBoard[0] || ' '} | ${newGameBoard.gameBoard[1] || ' '} | ${
+      newGameBoard.gameBoard[2] || ' '
+    }
+${newGameBoard.gameBoard[3] || ' '} | ${newGameBoard.gameBoard[4] || ' '} | ${
+      newGameBoard.gameBoard[5] || ' '
+    }
+${newGameBoard.gameBoard[6] || ' '} | ${newGameBoard.gameBoard[7] || ' '} | ${
+      newGameBoard.gameBoard[8] || ' '
+    }
+`);
+  } else {
     alert('make a new choice');
     nextChoice();
   }
@@ -73,12 +81,11 @@ function nextChoice(newGameBoard, currentPlayer) {
   } else if (userInput == null) {
     // if not defined, restart, prompt again
     alert('make a new choice');
-    nextChoice();
+    nextChoice(newGameBoard, currentPlayer);
   }
 }
 
 function checkForWin(gameBoard, currentPlayer) {
-  const gameState = 'playing';
   if (
     (gameBoard.gameBoard[0] === currentPlayer.piece &&
       gameBoard.gameBoard[1] === currentPlayer.piece &&
@@ -90,7 +97,7 @@ function checkForWin(gameBoard, currentPlayer) {
       gameBoard.gameBoard[7] === currentPlayer.piece &&
       gameBoard.gameBoard[8] === currentPlayer.piece)
   ) {
-    return (gameState = 'win');
+    return (gameBoard.gameState = 'win');
   } else if (
     (gameBoard.gameBoard[0] === currentPlayer.piece &&
       gameBoard.gameBoard[3] === currentPlayer.piece &&
@@ -102,7 +109,7 @@ function checkForWin(gameBoard, currentPlayer) {
       gameBoard.gameBoard[5] === currentPlayer.piece &&
       gameBoard.gameBoard[8] === currentPlayer.piece)
   ) {
-    return (gameState = 'win');
+    return (gameBoard.gameState = 'win');
   } else if (
     (gameBoard.gameBoard[0] === currentPlayer.piece &&
       gameBoard.gameBoard[4] === currentPlayer.piece &&
@@ -111,43 +118,46 @@ function checkForWin(gameBoard, currentPlayer) {
       gameBoard.gameBoard[4] === currentPlayer.piece &&
       gameBoard.gameBoard[6] === currentPlayer.piece)
   ) {
-    return (gameState = 'win');
+    return (gameBoard.gameState = 'win');
   }
 }
 
 function ifPlaying(playerOne, playerTwo, newGameBoard, currentPlayer) {
-  console.log(newGameBoard);
-  console.log(currentPlayer);
-
   if (newGameBoard.gameState === 'playing') {
     nextChoice(newGameBoard, currentPlayer);
 
-    let oldPiece = currentPlayer.piece;
-    if (playerOne.piece == oldPiece) {
-      playerTwo = currentPlayer;
-    } else {
-      currentPlayer = playerOne;
-    }
+    checkForWin(newGameBoard, currentPlayer);
 
-    checkForWin(newGameBoard);
-    if (gameState == 'win') {
-      ifWon();
+    if (newGameBoard.gameState !== 'win') {
+      let oldPiece = currentPlayer.piece;
+      if (playerOne.piece == oldPiece) {
+        currentPlayer = playerTwo;
+      } else {
+        currentPlayer = playerOne;
+      }
+      ifPlaying(playerOne, playerTwo, newGameBoard, currentPlayer);
     } else {
-      ifPlaying();
+      ifWon(newGameBoard, currentPlayer);
     }
   }
 }
 
-function ifWon(gameState, currentPlayer) {
-  checkForWin();
-  if (gameState === 'win') {
-    currentPlayer.score += 1;
-  }
+function ifWon(gameBoard, currentPlayer) {
+  currentPlayer.timesWon += 1;
 
-  console.log(`${currentPlayer.name} wins!`);
-  return (gameBoard = createGame());
+  console.log(`${currentPlayer.playerName} wins!`);
+  return playAgain();
 }
 
+function playAgain() {
+  let play = prompt('do you want to play a tic tac toe?');
+
+  if (play == 'yes') {
+    return playGame();
+  } else {
+    return;
+  }
+}
 /**
  * Update should take the userInput and change the gameBoard with piece... how to get piece?
  */
@@ -171,5 +181,4 @@ function createPlayer(playerName, piece) {
 
   return { playerName, timesWon: 0, piece };
 }
-
-playGame();
+playAgain();
